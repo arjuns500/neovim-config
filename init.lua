@@ -1,3 +1,3 @@
 require("settings")
-	require("packages")
+require("packages")
 require("keybinds")

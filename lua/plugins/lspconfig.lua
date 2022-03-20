@@ -1,15 +1,15 @@
 local nvim_lsp = require("lspconfig")
+local lsp_installer = require("nvim-lsp-installer")
+
 
 --- NULL-LS ---
 
 local null_ls = require("null-ls")
 
-null_ls.config({
+null_ls.setup({
     sources = { null_ls.builtins.formatting.prettier },
 	debug = true
 })
-
-nvim_lsp["null-ls"].setup {}
 
 --------------
 
@@ -20,7 +20,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 		signs = true,
 	}
 )
-vim.cmd [[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
+vim.cmd [[autocmd CursorHold * lua vim.diagnostic.open_float()]]
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
 	vim.lsp.handlers.hover, {
@@ -60,5 +60,13 @@ local on_attach = function(client, bufnr)
 
 end
 
-nvim_lsp.tsserver.setup{ on_attach = on_attach }
-nvim_lsp.rust_analyzer.setup { on_attach = on_attach }
+lsp_installer.on_server_ready(function(server)
+    local opts = {
+		on_attach = on_attach
+	}
+    -- (optional) Customize the options passed to the server
+    -- if server.name == "tsserver" then
+    --     opts.root_dir = function() ... end
+    -- end
+    server:setup(opts)
+end)

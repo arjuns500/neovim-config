@@ -1,9 +1,7 @@
--- Bootstrap packer.nvim
-local install_path = vim.fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
-
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-	vim.fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
-	vim.cmd "packadd packer.nvim"
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 return require("packer").startup(function()
@@ -76,4 +74,7 @@ return require("packer").startup(function()
 
 	-- A plugin to show show possible keybinding completions
 	use "folke/which-key.nvim"
+
+	-- A package to help installing lsp servers
+	use "williamboman/nvim-lsp-installer"
 end)

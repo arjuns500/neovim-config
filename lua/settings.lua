@@ -20,5 +20,7 @@ vim.g.nvim_tree_auto_open = 1
 
 vim.g.cursorhold_updatetime = 300
 
-
-require('nord').set()
+local ok, nord = pcall(require, "nord")
+if ok then
+	nord.set()
+end
