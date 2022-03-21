@@ -26,7 +26,10 @@ return require("packer").startup(function()
 	use "shaunsingh/nord.nvim"
 
 	-- A fast tree written mainly in lua.
-	use "kyazdani42/nvim-tree.lua"
+	use {
+		"kyazdani42/nvim-tree.lua",
+		config = function() require'nvim-tree'.setup {} end
+	}
 
 	-- A status line written in lua
 	use {
@@ -39,6 +42,7 @@ return require("packer").startup(function()
 		'nvim-telescope/telescope.nvim',
 		requires = {{'nvim-lua/popup.nvim'}}
 	}
+
 
 	--- LANGUAGE FEATURES ---
 
@@ -67,10 +71,7 @@ return require("packer").startup(function()
 	--- EDITING ---
 
 	-- Auto pairing plugin
-	use {
-		"jiangmiao/auto-pairs",
-		disable = true
-	}
+	use "jiangmiao/auto-pairs"
 
 	-- A plugin to show show possible keybinding completions
 	use "folke/which-key.nvim"
